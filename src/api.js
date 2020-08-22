@@ -17,14 +17,14 @@ router.get('/',(req,res)=>{
 router.get('/0/connect/:apiKey/:apiSecret',(req,res)=>{
     const bitbns = new bitbnsApi({
         apiKey :  req.params.apiKey,
-        apiSecretKey : req.params.apiSecret}); 
+        apiSecretKey : req.params.apiSecret});
 
         bitbns.platformStatus(function(error, data){
-            res.json({
-                "status":data.status,
-                "error":data.error,
-                "code":data.code
-            })
+            if(data.status==1 && error==null && data.code==200){
+                res.json({isConnected:true})
+            }else{
+                res.json({isConnected:false})
+            }
           });
 })
 
