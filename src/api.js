@@ -14,6 +14,8 @@ router.get('/',(req,res)=>{
 
 
 // for bitbns
+
+//connection
 router.get('/0/connect/:apiKey/:apiSecret',(req,res)=>{
     const bitbns = new bitbnsApi({
         apiKey :  req.params.apiKey,
@@ -26,6 +28,29 @@ router.get('/0/connect/:apiKey/:apiSecret',(req,res)=>{
                 res.json({isConnected:false})
             }
           });
+})
+
+
+//for current balance
+router.get('/0/currentbalance/:apiKey/:apiSecret',(req,res)=>{
+    const bitbns = new bitbnsApi({
+        apiKey :  req.params.apiKey,
+        apiSecretKey : req.params.apiSecret});
+
+        bitbns.currentCoinBalance('EVERYTHING', function(error, data){
+            const balance={}
+            if(!error){
+              for(x in data.data){
+                  if(data.data[x]>0){
+                      balance[x]=data.data[x];
+                  }
+              }
+
+              res.json({balance})
+            } else {
+              res.json({error})
+            }
+           })
 })
 
 app.use('/.netlify/functions/api',router)
