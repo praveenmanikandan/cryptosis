@@ -46,7 +46,7 @@ router.get('/0/currentbalance/:apiKey/:apiSecret',(req,res)=>{
                   }
               }
 
-              res.json({balance})
+              res.json({balance,INRBalance:data.data["availableorderMoney"],INRInorderBalance:data.data["inorderMoney"]})
             } else {
               res.json({error})
             }
