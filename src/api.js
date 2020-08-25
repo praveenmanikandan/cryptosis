@@ -39,10 +39,40 @@ router.get('/0/currentbalance/:apiKey/:apiSecret',(req,res)=>{
 
         bitbns.currentCoinBalance('EVERYTHING', function(error, data){
             const balance={}
+            let newString=""
             if(!error){
               for(x in data.data){
                   if(data.data[x]>0){
-                      balance[x]=data.data[x];
+                        if(x[0]=='a'){
+                            newString=(x.substr(14))
+                            if(newString!="Money"){
+                                if(balance[newString]==undefined){
+                                    const currency={inorder:0,available:0}
+                                    currency.available=data.data[x]
+                                    balance[newString]=currency
+                                }else{
+                                    const currency=balance[newString]
+                                    currency.available=data.data[x]
+                                    balance[newString]=currency
+                                }
+                               
+                            }
+                        }else if(x[0]=='i'){
+                            newString=(x.substr(7))
+                            if(newString!="Money"){
+                                if(balance[newString]==undefined){
+                                    const currency={inorder:0,available:0}
+                                    currency.inorder=data.data[x]
+                                    balance[newString]=currency
+                                }else{
+                                    const currency=balance[newString]
+                                    currency.inorder=data.data[x]
+                                    balance[newString]=currency
+                                }
+                               
+                            }
+                        }
+                      
                   }
               }
 
