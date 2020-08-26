@@ -83,6 +83,25 @@ router.get('/0/currentbalance/:apiKey/:apiSecret',(req,res)=>{
            })
 })
 
+
+//for current price
+router.get('/0/currentprice/:apiKey/:apiSecret',(req,res)=>{
+    const bitbns = new bitbnsApi({
+        apiKey :  req.params.apiKey,
+        apiSecretKey : req.params.apiSecret});
+
+        bitbns.getTickerApi('',function(error,data){
+            if(!error){
+                res.json({data:data.data})
+            }else{
+                res.json({error})    
+            }
+            
+          })
+})
+
+
+
 app.use('/.netlify/functions/api',router)
 
 module.exports.handler=serverless(app)
