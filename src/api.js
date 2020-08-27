@@ -100,6 +100,24 @@ router.get('/0/currentprice/:apiKey/:apiSecret',(req,res)=>{
           })
 })
 
+// for executed order
+router.get('/0/executedorders/:apiKey/:apiSecret/:crypto',(req,res)=>{
+    const bitbns = new bitbnsApi({
+        apiKey :  req.params.apiKey,
+        apiSecretKey : req.params.apiSecret});
+
+        let pageNo = 0; // starts with 0
+        let since = '2019-01-01T00:00:00Z'; // shows trade after that period
+        bitbns.listExecutedOrders(req.params.crypto, pageNo, since, function(error, data){
+         if(!error){
+           res.json({data:data.data})
+         } else {
+           res.json({error})
+         }
+        })
+           
+})
+
 
 
 app.use('/.netlify/functions/api',router)
