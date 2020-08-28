@@ -47,13 +47,14 @@ router.get('/0/currentbalance/:apiKey/:apiSecret',(req,res)=>{
                             newString=(x.substr(14))
                             if(newString!="Money"){
                                 if(balance[newString]==undefined){
-                                    const currency={inorder:0,available:0}
+                                    const currency={inorder:0,available:0,viewReport:false}
                                     currency.available=data.data[x]
                                     balance[newString]=currency
                                 }else{
                                     const currency=balance[newString]
                                     currency.available=data.data[x]
                                     balance[newString]=currency
+                                    
                                 }
                                
                             }
@@ -61,7 +62,7 @@ router.get('/0/currentbalance/:apiKey/:apiSecret',(req,res)=>{
                             newString=(x.substr(7))
                             if(newString!="Money"){
                                 if(balance[newString]==undefined){
-                                    const currency={inorder:0,available:0}
+                                    const currency={inorder:0,available:0,viewReport:false}
                                     currency.inorder=data.data[x]
                                     balance[newString]=currency
                                 }else{
@@ -72,7 +73,7 @@ router.get('/0/currentbalance/:apiKey/:apiSecret',(req,res)=>{
                                
                             }
                         }
-                      
+                        
                   }
               }
 
